@@ -61,6 +61,20 @@ int main(int argc, char *argv[]){
         }/* switch */
     }/* while */
 
+    /* do some checking */
+
+    /* -k specified without -l */
+    if(o.keepopen && !o.listen){
+        fprintf(stderr, "cannot specify -k without -l\n");
+        exit(EXIT_FAILURE);
+    }
+
+    /* -p not specified with -l */
+    if(o.listen && !o.port){
+        fprintf(stderr, "must specify -p with -l\n");
+        exit(EXIT_FAILURE);
+    }
+
     return 0;
 }/* main() */
 
