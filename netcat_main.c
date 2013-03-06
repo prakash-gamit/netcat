@@ -51,12 +51,10 @@ int main(int argc, char *argv[]){
             case 'u': o.udp = 1;
                       break;
 
-            case ':': fprintf(stderr, "-%c requires argument\n", optopt);
-                      exit(EXIT_FAILURE);
+            case ':': bye("-%c requires argument\n", optopt);
 
             /* case ? */
-            default: fprintf(stderr, "unknown option -%c\n", optopt);
-                     exit(EXIT_FAILURE);
+            default: bye("unknown option -%c\n", optopt);
 
         }/* switch */
     }/* while */
@@ -65,14 +63,12 @@ int main(int argc, char *argv[]){
 
     /* -k specified without -l */
     if(o.keepopen && !o.listen){
-        fprintf(stderr, "cannot specify -k without -l\n");
-        exit(EXIT_FAILURE);
+        bye("cannot specify -k without -l\n");
     }
 
     /* -p not specified with -l */
     if(o.listen && !o.port){
-        fprintf(stderr, "must specify -p with -l\n");
-        exit(EXIT_FAILURE);
+        bye("must specify -p with -l\n");
     }
 
     return 0;
