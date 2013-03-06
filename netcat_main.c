@@ -17,6 +17,10 @@
 #include "netcat_core.h"
 
 
+/* show usage & help */
+void help(void);
+
+
 int main(int argc, char *argv[]){
     /* initialize options */
     init_options();
@@ -59,3 +63,9 @@ int main(int argc, char *argv[]){
 
     return 0;
 }/* main() */
+
+
+void help(){
+    //TODO
+    //write usage & help
+}
