@@ -31,4 +31,26 @@
 #include <sys/socket.h>
 
 
+struct options{
+    /* source port to use */
+    unsigned short port;
+
+    /* is it listen mode or client mode */
+    int listen;
+    /* accept multiple connections in listen mode */
+    int keepopen;
+
+    /* socket is udp */
+    int udp;
+
+    /* should be verbose */
+    int verbose;
+
+    /* command is to be executed */
+    int execcommand;
+    /* command to execute */
+    char *command;
+};
+
+
 #endif
