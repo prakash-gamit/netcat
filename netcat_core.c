@@ -52,3 +52,9 @@ void bye(const char *format, ...){
 
     exit(EXIT_FAILURE);
 }
+
+
+void die(char *msg){
+    perror(msg);
+    exit(EXIT_FAILURE);
+}

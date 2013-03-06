@@ -77,4 +77,8 @@ extern void init_options(void);
 extern void bye(const char *, ...);
 
 
+/* writes error message using perror and then quits */
+extern void die(char *);
+
+
 #endif
