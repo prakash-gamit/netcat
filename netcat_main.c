@@ -20,6 +20,9 @@
 /* show usage & help */
 void help(void);
 
+/* check whether its a valid port or not */
+int validate_port(char *);
+
 
 int main(int argc, char *argv[]){
     /* initialize options */
@@ -39,7 +42,7 @@ int main(int argc, char *argv[]){
                       o.command = optarg;
                       break;
 
-            case 'p': o.port = atoi(optarg);
+            case 'p': o.port = validate_port(optarg);
                       break;
 
             case 'l': o.listen = 1;
@@ -78,4 +81,16 @@ int main(int argc, char *argv[]){
 void help(){
     //TODO
     //write usage & help
+}
+
+
+int validate_port(char *p){
+    int port = atoi(p);
+
+    if(port <= 0 || port > 0xffff){
+        bye("Invalid port %d\n", port);
+    }
+
+    /* return port number if its valid */
+    return port;
 }
