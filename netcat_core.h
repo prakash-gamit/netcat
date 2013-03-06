@@ -65,4 +65,8 @@ extern struct sockaddr_in servaddr;
 extern int sockfd;
 
 
+/* initialize options struct to default values */
+extern void init_options(void);
+
+
 #endif

@@ -22,3 +22,21 @@ struct options o;
 struct sockaddr_in servaddr;
 
 int sockfd;
+
+
+void init_options(void){
+    o.port = 0;
+
+    /* deafault is client mode */
+    o.listen = 0;
+    o.keepopen = 0;
+
+    /* default socket type is tcp */
+    o.udp = 0;
+
+    /* do not execute any command */
+    o.execcommand = 0;
+
+    /* don't be verbose */
+    o.verbose = 0;
+}
