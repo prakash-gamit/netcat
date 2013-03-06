@@ -33,6 +33,9 @@
 
 
 struct options{
+    /* host to connect to in case of client mode */
+    char *target;
+
     /* source port to use */
     unsigned short port;
 

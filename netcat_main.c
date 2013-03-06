@@ -74,6 +74,22 @@ int main(int argc, char *argv[]){
         bye("must specify -p with -l\n");
     }
 
+
+    /* get IP-address and port in case of client mode */
+    if(!o.listen && optind < argc){
+        o.target = argv[optind++];
+
+        if(optind < argc){
+            bye("No port specified\n");
+        }
+
+        o.port = validate_port(argv[optind]);
+
+    } else{
+        help();
+        exit(EXIT_FAILURE);
+    }
+
     return 0;
 }/* main() */
 
