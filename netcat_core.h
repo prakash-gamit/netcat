@@ -53,4 +53,16 @@ struct options{
 };
 
 
+/* declare global variables */
+
+/* global options struct */
+extern struct options o;
+
+/* server address struct */
+extern struct sockaddr_in servaddr;
+
+/* socket descriptor created using socket */
+extern int sockfd;
+
+
 #endif
