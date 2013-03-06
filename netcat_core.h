@@ -20,6 +20,7 @@
 /* include standar header files */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #include <string.h>
 #include <strings.h>
@@ -67,6 +68,10 @@ extern int sockfd;
 
 /* initialize options struct to default values */
 extern void init_options(void);
+
+
+/* print error message to @stderr and exit */
+extern void bye(const char *, ...);
 
 
 #endif
