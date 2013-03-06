@@ -59,7 +59,7 @@ struct options{
 extern struct options o;
 
 /* server address struct */
-extern struct sockaddr_in servaddr;
+extern struct sockaddr servaddr;
 
 /* socket descriptor created using socket */
 extern int sockfd;

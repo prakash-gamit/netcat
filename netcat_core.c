@@ -19,7 +19,7 @@
 
 struct options o;
 
-struct sockaddr_in servaddr;
+struct sockaddr servaddr;
 
 int sockfd;
 
