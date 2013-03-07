@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
     if(!o.listen && optind < argc){
         o.target = argv[optind++];
 
-        if(optind < argc){
+        if(optind > argc){
             bye("No port specified\n");
         }
 
