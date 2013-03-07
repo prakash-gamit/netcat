@@ -85,3 +85,34 @@ int Inet_pton(int af, const char *src, void *dst){
 
     return status;
 }
+
+
+int Select(int maxfdp1, fd_set *readset, fd_set *writeset,
+        fd_set *exceptset, struct timeval *timeout){
+    int readyCount = select(maxfdp1, readset, writeset, exceptset, timeout);
+
+    if(readyCount == -1)
+        die("select");
+
+    return readyCount;
+}
+
+
+int Read(int fd, void *buf, size_t count){
+    int bytes = read(fd, buf, count);
+
+    if(bytes == -1)
+        die("read");
+
+    return bytes;
+}
+
+
+int Write(int fd, const void *buf, size_t count){
+    int bytes = write(fd, buf, count);
+
+    if(bytes == -1)
+        die("write");
+
+    return bytes;
+}

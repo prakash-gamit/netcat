@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <sys/select.h>
 
 
 extern int Socket(int, int, int);
@@ -41,6 +42,15 @@ extern int Accept(int, struct sockaddr *, socklen_t *);
 
 
 extern int Inet_pton(int, const char *, void *);
+
+
+extern int Select(int, fd_set *, fd_set *, fd_set *, struct timeval *);
+
+
+extern int Read(int, void *, size_t);
+
+
+extern int Write(int, const void *, size_t);
 
 
 #endif
