@@ -57,16 +57,8 @@ struct options{
 };
 
 
-/* declare global variables */
-
 /* global options struct */
 extern struct options o;
-
-/* server address struct */
-extern struct sockaddr servaddr;
-
-/* socket descriptor created using socket */
-extern int sockfd;
 
 
 /* initialize options struct to default values */

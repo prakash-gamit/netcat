@@ -19,10 +19,6 @@
 
 struct options o;
 
-struct sockaddr servaddr;
-
-int sockfd;
-
 
 void init_options(void){
     o.port = 0;
