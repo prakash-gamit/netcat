@@ -15,7 +15,6 @@
  * ********************************************************************* */
 
 #include "wrapper.h"
-#include "netcat_core.h"
 
 
 int Socket(int family, int type, int protocol){
@@ -66,4 +65,23 @@ int Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen){
         die("accept");
 
     return clifd;
+}
+
+
+int Inet_pton(int af, const char *src, void *dst){
+    int status = inet_pton(af, src, dst);
+
+    if(status == -1){
+        die("inet_pton");
+    }
+
+    //TODO
+    /* hostname given instead if IP-address 
+     * resolve hostname */
+    if(status == 0){
+        //for now print error
+        die("inet_pton");
+    }
+
+    return status;
 }

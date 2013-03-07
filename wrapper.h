@@ -22,6 +22,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 
 
 extern int Socket(int, int, int);
@@ -37,6 +38,9 @@ extern int Listen(int, int);
 
 
 extern int Accept(int, struct sockaddr *, socklen_t *);
+
+
+extern int Inet_pton(int, const char *, void *);
 
 
 #endif
