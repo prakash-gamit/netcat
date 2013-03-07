@@ -21,11 +21,3 @@
 /* @type - type of socket */
 /* @return - socket descriptor */
 extern int create_socket(int type);
-
-
-/* @mode - is it client mode or listen mode
- * @port - port to use
- * @target - client mode = host to connect
- *           listen mode = interfce to use*/
-/* @return - address struct */
-extern struct sockaddr_in build_addr_struct(int mode, int port, char *target);

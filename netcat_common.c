@@ -29,20 +29,3 @@ int create_socket(int type){
 
     return fd;
 }
-
-
-struct sockaddr_in build_addr_struct(int mode, int port, char *target){
-    struct sockaddr_in addr;
-    bzero(&addr, sizeof(addr));
-
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-
-    if(mode == 1){/* listen mode */
-        addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    } else{/* client mode */
-        Inet_pton(AF_INET, target, (void *)&addr.sin_addr);
-    }
-
-    return addr;
-}
