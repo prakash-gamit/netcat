@@ -15,7 +15,6 @@
 
 #include "netcat_core.h"
 #include "netcat_common.h"
-#include "wrapper.h"
 
 
 /* start client program */

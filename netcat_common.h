@@ -14,7 +14,6 @@
  * ********************************************************************** */
 
 #include "netcat_core.h"
-#include "wrapper.h"
 #include <strings.h>
 
 
