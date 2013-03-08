@@ -30,13 +30,14 @@ void start_server(){
     servaddr.sin_port = htons(o.port);
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+    if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
+        die("bind");
 
-    listen(sockfd, 5);
+    if(listen(sockfd, 5) == -1)
+        die("listen");
 
     /* start service */
     do{
-        printf("service\n");
         service();
     }while(o.keepopen);
 }
@@ -46,11 +47,13 @@ void service(){
     struct sockaddr_in cliaddr;
     int clifd, clilen;
     /* accept a connection */
-    clifd = accept(sockfd, (struct sockaddr *)&cliaddr, &clilen);
+    if((clifd = accept(sockfd, (struct sockaddr *)&cliaddr, &clilen)) == -1)
+        die("accept");
 
     char sendline[MAX], recvline[MAX];
     fd_set rset;
     int maxfdp1;
+    int bytes;
 
     FD_ZERO(&rset);
     while(1){
@@ -59,19 +62,31 @@ void service(){
 
         maxfdp1 = (fileno(stdin) < clifd? clifd : fileno(stdin)) + 1;
 
-        select(maxfdp1, &rset, NULL, NULL, NULL);
+        if(select(maxfdp1, &rset, NULL, NULL, NULL) == -1)
+            die("select");
 
         if(FD_ISSET(clifd, &rset)){
-            read(clifd, recvline, MAX);
+            bytes = read(clifd, recvline, MAX);
+
+            if(bytes == -1)
+                die("read");
+            else if(bytes == 0)
+                break;
 
             fputs(recvline, stdout);
         }
 
         if(FD_ISSET(fileno(stdin), &rset)){
-            if(fgets(sendline, MAX, stdin) == NULL)
-                break;/* all done */
+            bzero(sendline, MAX);
+            bytes = read(stdin, sendline, MAX);
 
-            write(clifd, sendline, strlen(sendline));
+            if(bytes == -1)
+                die("read");
+            else if(bytes == 0)
+                break;
+
+            if(write(clifd, sendline, strlen(sendline)) == -1)
+                die("write");
         }
     }/* while */
     

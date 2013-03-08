@@ -28,14 +28,26 @@ void start_client(){
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(o.port);
-    Inet_pton(AF_INET, o.target, &servaddr.sin_addr);
 
-    connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+    int status = inet_pton(AF_INET, o.target, &servaddr.sin_addr);
+    if(status == -1)
+        die("inet_pton");
+    else if(status == 0){/* hostname given not IP */
+        //TODO
+        /* get IP from hostname
+         * but for now print error and exit
+         */
+        bye("hostname not supported\ngive IP-address\n");
+    }
+
+    if(connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
+        die("connect");
 
     char sendline[MAX], recvline[MAX];
     
     fd_set rset;
     int maxfdp1;
+    int bytes;
 
     FD_ZERO(&rset);
     while(1){
@@ -44,19 +56,31 @@ void start_client(){
 
         maxfdp1 = (fileno(stdin) < sockfd ? sockfd : fileno(stdin)) + 1;
 
-        select(maxfdp1, &rset, NULL, NULL, NULL);
+        if(select(maxfdp1, &rset, NULL, NULL, NULL) == -1)
+            die("select");
 
         if(FD_ISSET(sockfd, &rset)){
-            read(sockfd, recvline, MAX);
+            bytes = read(sockfd, recvline, MAX);
+
+            if(bytes == -1)
+                die("read");
+            else if(bytes == 0)
+                break;
 
             fputs(recvline, stdout);
         }
 
         if(FD_ISSET(fileno(stdin), &rset)){
-            if(fgets(sendline, MAX, stdin) == NULL)
-                break;/* all done */
+            bzero(sendline, MAX);
+            bytes = read(stdin, sendline, MAX);
 
-            write(sockfd, sendline, strlen(sendline));
+            if(bytes == -1)
+                die("read");
+            else if(bytes == 0)
+                break;
+
+            if(write(sockfd, sendline, strlen(sendline)) == -1)
+                die("write");
         }
     }/* while */
 
