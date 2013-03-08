@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
 
         o.port = validate_port(argv[optind]);
 
-    } else{
+    } else if(!o.listen){
         help();
         exit(EXIT_FAILURE);
     }
