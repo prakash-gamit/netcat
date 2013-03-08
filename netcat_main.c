@@ -16,6 +16,7 @@
 
 #include "netcat_core.h"
 #include "netcat_client.h"
+#include "netcat_listen.h"
 
 
 /* show usage & help */
@@ -91,7 +92,9 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-    if(!o.listen)
+    if(o.listen)
+        start_server();
+    else
         start_client();
 
     return 0;
