@@ -17,6 +17,9 @@
 #include "netcat_client.h"
 
 
+int sockfd;
+
+
 void start_client(){
     sockfd = create_socket(o.udp);
 
@@ -27,7 +30,7 @@ void start_client(){
     servaddr.sin_port = htons(o.port);
     Inet_pton(AF_INET, o.target, &servaddr.sin_addr);
 
-    Connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+    connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
     char sendline[MAX], recvline[MAX];
     
@@ -41,10 +44,10 @@ void start_client(){
 
         maxfdp1 = (fileno(stdin) < sockfd ? sockfd : fileno(stdin)) + 1;
 
-        Select(maxfdp1, &rset, NULL, NULL, NULL);
+        select(maxfdp1, &rset, NULL, NULL, NULL);
 
         if(FD_ISSET(sockfd, &rset)){
-            Read(sockfd, recvline, MAX);
+            read(sockfd, recvline, MAX);
 
             fputs(recvline, stdout);
         }
@@ -53,7 +56,7 @@ void start_client(){
             if(fgets(sendline, MAX, stdin) == NULL)
                 break;/* all done */
 
-            Write(sockfd, sendline, strlen(sendline));
+            write(sockfd, sendline, strlen(sendline));
         }
     }/* while */
 

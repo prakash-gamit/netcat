@@ -17,6 +17,9 @@
 #include "netcat_listen.h"
 
 
+int sockfd;
+
+
 void start_server(){
     sockfd = create_socket(o.listen);
 
@@ -27,7 +30,7 @@ void start_server(){
     servaddr.sin_port = htons(o.port);
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    Bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
+    bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
     listen(sockfd, 5);
 
@@ -56,10 +59,10 @@ void service(){
 
         maxfdp1 = (fileno(stdin) < clifd? clifd : fileno(stdin)) + 1;
 
-        Select(maxfdp1, &rset, NULL, NULL, NULL);
+        select(maxfdp1, &rset, NULL, NULL, NULL);
 
         if(FD_ISSET(clifd, &rset)){
-            Read(clifd, recvline, MAX);
+            read(clifd, recvline, MAX);
 
             fputs(recvline, stdout);
         }
@@ -68,7 +71,7 @@ void service(){
             if(fgets(sendline, MAX, stdin) == NULL)
                 break;/* all done */
 
-            Write(clifd, sendline, strlen(sendline));
+            write(clifd, sendline, strlen(sendline));
         }
     }/* while */
     

@@ -19,13 +19,15 @@
 
 int create_socket(int type){
     int sockettype = SOCK_STREAM;
+    int fd;
 
     /* if -u flag is specified on command line for udp */
     if(type){
         sockettype = SOCK_DGRAM;
     }
 
-    int fd = Socket(AF_INET, sockettype, 0);
+    if((fd = socket(AF_INET, sockettype, 0)) == -1)
+        die("socket");
 
     return fd;
 }
