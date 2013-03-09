@@ -21,7 +21,14 @@ int sockfd;
 
 
 void start_client(){
-    sockfd = create_socket(o.udp);
+
+    if(o.udp)
+        sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    else
+        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    if(sockfd == -1)
+        die("socket");
 
     struct sockaddr_in servaddr;
     bzero(&servaddr, sizeof(servaddr));

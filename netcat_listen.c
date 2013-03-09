@@ -16,12 +16,17 @@
 
 #include "netcat_listen.h"
 
-
 int sockfd;
 
 
 void start_server(){
-    sockfd = create_socket(o.listen);
+    if(o.udp)
+        sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    else
+        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    if(sockfd == -1)
+        die("socket");
 
     struct sockaddr_in servaddr;
     bzero(&servaddr, sizeof(servaddr));
