@@ -67,6 +67,7 @@ void start_client(){
             die("select");
 
         if(FD_ISSET(sockfd, &rset)){
+            bzero(recvline, MAX);
             bytes = read(sockfd, recvline, MAX);
 
             if(bytes == -1)

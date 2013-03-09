@@ -71,6 +71,7 @@ void service(){
             die("select");
 
         if(FD_ISSET(clifd, &rset)){
+            bzero(recvline, MAX);
             bytes = read(clifd, recvline, MAX);
 
             if(bytes == -1)
