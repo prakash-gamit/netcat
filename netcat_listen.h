@@ -14,7 +14,6 @@
  * ********************************************************************** */
 
 #include "netcat_core.h"
-#include "netcat_common.h"
 
 
 extern void start_server();

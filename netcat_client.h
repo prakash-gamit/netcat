@@ -14,7 +14,6 @@
  * ********************************************************************** */
 
 #include "netcat_core.h"
-#include "netcat_common.h"
 
 
 /* start client program */
