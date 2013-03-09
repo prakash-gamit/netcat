@@ -79,7 +79,7 @@ void start_client(){
 
         if(FD_ISSET(fileno(stdin), &rset)){
             bzero(sendline, MAX);
-            bytes = read(stdin, sendline, MAX);
+            bytes = read(fileno(stdin), sendline, MAX);
 
             if(bytes == -1)
                 die("read");
