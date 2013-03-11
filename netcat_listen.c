@@ -42,6 +42,8 @@ void start_server(){
         die("listen");
 
     /* start service */
+    if(o.verbose)
+        printf("started listening on port %d\n", o.port);
     do{
         service();
     }while(o.keepopen);
@@ -50,10 +52,20 @@ void start_server(){
 
 void service(){
     struct sockaddr_in cliaddr;
-    int clifd, clilen;
+    int clifd, clilen = sizeof(cliaddr);
     /* accept a connection */
     if((clifd = accept(sockfd, (struct sockaddr *)&cliaddr, &clilen)) == -1)
         die("accept");
+
+    /* print client address and port number when a new connection
+       request is received */
+    char str[INET_ADDRSTRLEN];
+    unsigned short p;
+    if(o.verbose){
+        p = ntohs(cliaddr.sin_port);
+        inet_ntop(AF_INET, &(cliaddr.sin_addr), str, INET_ADDRSTRLEN);
+        printf("got new connection from (%s, %d)\n", str, p);
+    }
 
     char sendline[MAX], recvline[MAX];
     fd_set rset;
@@ -96,4 +108,7 @@ void service(){
     
     /* close connection */
     close(clifd);
+    if(o.verbose){
+        printf("closed connection to (%s, %d)\n", str, p);
+    }
 }
