@@ -88,8 +88,6 @@ void service(){
 
             if(bytes == -1)
                 die("read");
-            else if(bytes == 0)
-                break;
 
             if(write(clifd, sendline, strlen(sendline)) == -1)
                 die("write");
