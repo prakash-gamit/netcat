@@ -50,6 +50,10 @@ void start_client(){
     if(connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
         die("connect");
 
+    if(o.verbose){
+        printf("connected to (%s, %d)\n", o.target, o.port);
+    }
+
     char sendline[MAX], recvline[MAX];
     
     fd_set rset;
@@ -93,4 +97,6 @@ void start_client(){
     }/* while */
 
     close(sockfd);
+    if(o.verbose)
+        printf("closed connection to (%s, %d)\n", o.target, o.port);
 }/* start_client() */
