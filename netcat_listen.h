@@ -15,8 +15,13 @@
 
 #include "netcat_core.h"
 
-
 extern void start_server();
 
 
-extern void service();
+extern void start_server_tcp();
+
+
+extern void service_tcp();
+
+
+extern start_server_udp();
