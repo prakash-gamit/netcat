@@ -117,3 +117,23 @@ void service_tcp(){
         printf("closed connection to (%s, %d)\n", str, p);
     }
 }
+
+
+void start_server_udp(){
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+
+    if(sockfd == -1)
+        die("socket");
+
+    struct sockaddr_in cliaddr;
+    int clilen;
+
+    char sendline[MAX], recvline[MAX];
+
+    /* recv datagram */
+    recvfrom(sockfd, recvline, MAX, 0, (struct sockaddr *)&cliaddr, &clilen);
+
+    /* connect to host */
+    if(connect(sockfd, (struct sockaddr *)&cliaddr, clilen) == -1)
+        die("connect");
+}
