@@ -20,10 +20,15 @@ int sockfd;
 
 
 void start_server(){
-    if(o.udp)
-        sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if(!o.udp)
+        start_server_tcp();
     else
-        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+        start_server_udp();
+}
+
+
+void start_server_tcp(){
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if(sockfd == -1)
         die("socket");
@@ -50,7 +55,7 @@ void start_server(){
 }
 
 
-void service(){
+void service_tcp(){
     struct sockaddr_in cliaddr;
     int clifd, clilen = sizeof(cliaddr);
     /* accept a connection */
