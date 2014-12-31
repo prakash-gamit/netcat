@@ -20,7 +20,7 @@
 
 
 /* show usage & help */
-void help(void);
+void help(char *argv[]);
 
 /* check whether its a valid port or not */
 int validate_port(char *);
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]){
     int c;
     while((c = getopt(argc, argv, ":hve:p:lku")) != -1){
         switch(c){
-            case 'h': help();
+            case 'h': help(argv);
                       exit(EXIT_SUCCESS);
 
             case 'v': o.verbose = 1;
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]){
         o.port = validate_port(argv[optind]);
 
     } else if(!o.listen){
-        help();
+        help(argv);
         exit(EXIT_FAILURE);
     }
 
@@ -101,9 +101,23 @@ int main(int argc, char *argv[]){
 }/* main() */
 
 
-void help(){
+void help(char *argv[]){
     //TODO
     //write usage & help
+    printf("example invocation:\n");
+    printf("server -\n");
+    printf("%s -l -p <port number> [-ekuv]\n", argv[0]);
+    printf("client -\n");
+    printf("%s <IP-address> <port>\n\n", argv[0]);
+
+    printf("options:\n");
+    printf("-h  show this help message\n");
+    printf("-v  show verbose output\n");
+    printf("-e  execute command\n");
+    printf("-p  specify port number\n");
+    printf("-l  start netcat in listen mode(server)\n");
+    printf("-k  keep server running after disconnecting from one client.\n");
+    printf("-u  use UDP instead of TCP\n");
 }
 
 
