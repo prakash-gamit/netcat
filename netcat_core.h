@@ -33,6 +33,8 @@
 #include <sys/select.h>
 #include <netinet/in.h>
 
+// remove warnings for inet_aton and other similar functions
+#include <arpa/inet.h>
 
 #define MAX 1024
 
