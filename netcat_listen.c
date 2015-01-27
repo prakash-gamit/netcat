@@ -2,7 +2,7 @@
  *
  *       Filename:  netcat_listen.c
  *
- *    Description:  
+ *    Description:
  *
  *        Version:  1.0
  *        Created:  Thursday 07 March 2013 09:52:58  IST
@@ -54,7 +54,7 @@ void service(){
     struct sockaddr_in cliaddr;
     int clifd, clilen = sizeof(cliaddr);
     /* accept a connection */
-    if((clifd = accept(sockfd, (struct sockaddr *)&cliaddr, &clilen)) == -1)
+    if((clifd = accept(sockfd, (struct sockaddr *)&cliaddr, (socklen_t *)&clilen)) == -1)
         die("accept");
 
     /* print client address and port number when a new connection
@@ -105,7 +105,7 @@ void service(){
                 die("write");
         }
     }/* while */
-    
+
     /* close connection */
     close(clifd);
     if(o.verbose){
