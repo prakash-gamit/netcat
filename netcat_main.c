@@ -102,8 +102,6 @@ int main(int argc, char *argv[]){
 
 
 void help(char *argv[]){
-    //TODO
-    //write usage & help
     printf("example invocation:\n");
     printf("server -\n");
     printf("%s -l -p <port number> [-ekuv]\n", argv[0]);
