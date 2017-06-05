@@ -15,7 +15,7 @@
  * ********************************************************************* */
 
 #include "netcat_client.h"
-
+#include <netdb.h> // gethostbyname
 
 int sockfd;
 
@@ -33,19 +33,28 @@ void start_client(){
     struct sockaddr_in servaddr;
     bzero(&servaddr, sizeof(servaddr));
 
+    /////////////// hostname support ////////////////////////////
+    struct hostent *hostent1 = gethostbyname(o.target);
+    if(!hostent1)
+    {
+        bye("could't resolve hostname\n");
+    }
+    memcpy(&(servaddr.sin_addr), hostent1->h_addr_list[0], hostent1->h_length);
+    /////////////////////////////////////////////////////////////
+
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(o.port);
 
-    int status = inet_pton(AF_INET, o.target, &servaddr.sin_addr);
-    if(status == -1)
-        die("inet_pton");
-    else if(status == 0){/* hostname given not IP */
-        //TODO
-        /* get IP from hostname
-         * but for now print error and exit
-         */
-        bye("hostname not supported\ngive IP-address\n");
-    }
+    // int status = inet_pton(AF_INET, o.target, &servaddr.sin_addr);
+    // if(status == -1)
+    //     die("inet_pton");
+    // else if(status == 0){/* hostname given not IP */
+    //     //TODO
+    //     /* get IP from hostname
+    //      * but for now print error and exit
+    //      */
+    //     bye("hostname not supported\ngive IP-address\n");
+    // }
 
     if(connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
         die("connect");
